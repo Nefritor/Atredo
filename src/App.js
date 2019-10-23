@@ -1,26 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import * as PagesLib from './page'
+import ErrorPage from './components/ErrorPage';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class Application extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            pageComponent: this.exportFromLib(PagesLib, props.pageName),
+            pageConfig: props.pageConfig
+        }
+    };
 
-export default App;
+    changePage = (pageName, pageConfig) => {
+        const pageComponent = this.exportFromLib(PagesLib, pageName);
+        const newState = {
+            pageComponent: pageComponent ? pageComponent : ErrorPage,
+            pageConfig: pageComponent ? pageConfig : {moduleName: pageName}
+        };
+        this.setState(newState);
+    };
+
+    asyncChangePage = (pageName, asyncFunction) => {
+        new Promise((resolve => {
+            asyncFunction(resolve);
+        })).then(result => {
+            this.changePage(pageName, result)
+        });
+    };
+
+    exportFromLib = (lib, module) => {
+        if (lib.hasOwnProperty(module)) {
+            return lib[module];
+        } else {
+            return false;
+        }
+    };
+
+    getPageData = () => {
+        return [
+            this.state.pageComponent,
+            this.state.pageConfig
+        ];
+    };
+
+
+
+    openAccount = () => {
+        this.asyncChangePage('Account', resolve => {
+            setTimeout(() => {
+                resolve({ test: 'this is async data' });
+            }, 1000);
+        })
+    };
+
+    render() {
+        const [PageComponent, PageConfig] = this.getPageData();
+        return (
+            <div>
+                <div className="App-body">
+                    <PageComponent config={PageConfig}/>
+                </div>
+                <div onClick={() => {
+                    this.openAccount();
+                }}>Account page
+                </div>
+                <div onClick={() => {
+                    this.changePage('Main', {test: 'Main'})
+                }}>Main page
+                </div>
+            </div>
+        );
+    }
+}
