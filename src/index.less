@@ -5,6 +5,17 @@
   src: url('./lib/DinPro.otf');
 }
 
+@mask-base: {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #00000099;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity .3s ease;
+}
+
 body {
   overflow: hidden;
   margin: 0;
@@ -54,6 +65,31 @@ code {
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      position: relative;
+
+      &-mask {
+        &-hidden {
+          display: none;
+        }
+
+        &-loading {
+          display: flex;
+          opacity: 1;
+          @mask-base();
+        }
+
+        &-transparent {
+          display: flex;
+          opacity: 0;
+          @mask-base();
+        }
+      }
+
+      &-loadingAnimation {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+      }
     }
   }
 

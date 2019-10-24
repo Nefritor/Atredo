@@ -46,6 +46,39 @@ code {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+.App-body-page-mask-hidden {
+  display: none;
+}
+.App-body-page-mask-loading {
+  display: flex;
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #00000099;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+.App-body-page-mask-transparent {
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #00000099;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+.App-body-page-loadingAnimation {
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
 }
 .App-menu {
   width: 299px;
