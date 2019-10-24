@@ -1,0 +1,73 @@
+@import '../../global';
+
+.Main {
+  height: 100%;
+
+  &-scrollContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
+  }
+
+  &-project {
+    width: 258px;
+    margin: 20px;
+    height: 130px;
+    border: @gray-solid-border;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform .1s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px -10px #00000033;
+    }
+
+    &-image {
+      justify-content: center;
+
+      &-plus {
+        height: 90px;
+      }
+    }
+
+    &-title {
+      height: 30px;
+      flex-shrink: 0;
+      padding: 0 10px;
+      line-height: 30px;
+      font-size: 17px;
+      border-bottom: @gray-solid-border;
+      @text-hidden-overflow();
+    }
+
+    &-description {
+      height: 100%;
+      margin: 5px 10px;
+      overflow: hidden;
+      font-size: 14px;
+      line-height: 1;
+    }
+  }
+}
+
+.ScrollbarsCustom {
+  &-Track {
+    height: 100% !important;
+    top: 0 !important;
+    border-radius: 0 !important;
+    width: 5px !important;
+    transition: width .1s ease;
+
+    &:hover, &:active {
+      width: 13px !important;
+    }
+  }
+
+  &-Thumb {
+    border-radius: 0 !important;
+  }
+}

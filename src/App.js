@@ -1,19 +1,26 @@
 import React, {Component} from 'react';
 import * as PagesLib from './page'
 import ErrorPage from './components/ErrorPage';
-import './App.css';
 
 export default class Application extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageComponent: this.exportFromLib(PagesLib, props.pageName),
+            pageComponent: this._exportFromLib(PagesLib, props.pageName),
             pageConfig: props.pageConfig
         }
     };
 
-    changePage = (pageName, pageConfig) => {
-        const pageComponent = this.exportFromLib(PagesLib, pageName);
+    asyncChangePage(pageName, asyncFunction) {
+        new Promise((resolve => {
+            asyncFunction(resolve);
+        })).then(result => {
+            this._changePage(pageName, result)
+        });
+    };
+
+    _changePage(pageName, pageConfig) {
+        const pageComponent = this._exportFromLib(PagesLib, pageName);
         const newState = {
             pageComponent: pageComponent ? pageComponent : ErrorPage,
             pageConfig: pageComponent ? pageConfig : {moduleName: pageName}
@@ -21,15 +28,7 @@ export default class Application extends Component {
         this.setState(newState);
     };
 
-    asyncChangePage = (pageName, asyncFunction) => {
-        new Promise((resolve => {
-            asyncFunction(resolve);
-        })).then(result => {
-            this.changePage(pageName, result)
-        });
-    };
-
-    exportFromLib = (lib, module) => {
+    _exportFromLib(lib, module) {
         if (lib.hasOwnProperty(module)) {
             return lib[module];
         } else {
@@ -37,37 +36,27 @@ export default class Application extends Component {
         }
     };
 
-    getPageData = () => {
+    _getPageData() {
         return [
             this.state.pageComponent,
             this.state.pageConfig
         ];
     };
 
-
-
-    openAccount = () => {
-        this.asyncChangePage('Account', resolve => {
-            setTimeout(() => {
-                resolve({ test: 'this is async data' });
-            }, 1000);
-        })
-    };
-
     render() {
-        const [PageComponent, PageConfig] = this.getPageData();
+        const [PageComponent, PageConfig] = this._getPageData();
         return (
-            <div>
+            <div className="App">
                 <div className="App-body">
-                    <PageComponent config={PageConfig}/>
+                    <div className="App-body-navBar">
+                        
+                    </div>
+                    <div className="App-body-page">
+                        <PageComponent config={PageConfig} pageChange={this.asyncChangePage.bind(this)} />
+                    </div>
                 </div>
-                <div onClick={() => {
-                    this.openAccount();
-                }}>Account page
-                </div>
-                <div onClick={() => {
-                    this.changePage('Main', {test: 'Main'})
-                }}>Main page
+                <div className="App-menu">
+
                 </div>
             </div>
         );

@@ -8,7 +8,7 @@ export default class Account extends Component {
 
     render() {
         return (
-            <div className="Account-body">
+            <div className="Account">
                 {this.test}
             </div>
         )
