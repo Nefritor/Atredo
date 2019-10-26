@@ -1,32 +1,45 @@
 import React from 'react';
-import './Main.css'
+import Base from '../Base';
 import Scrollbar from 'react-scrollbars-custom';
 import {ReactComponent as ImagePlus} from '../../lib/plus.svg';
+import './Main.css'
 
-export default class Main extends React.Component {
-    constructor(props) {
-        super(props);
-        this.config = props.config;
-        this.pageChange = props.pageChange;
-    }
-
-    _getConfig(key, resolve) {
+export default class Main extends Base {
+    getData(config, resolve) {
         setTimeout(() => {
-            resolve(this.config);
-        }, 1000);
+            resolve({
+                projects: [
+                    {key: 0, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {
+                        key: 1,
+                        title: 'Новый проект с очень длинным описанием. Очень длинным, очень длинным, очень длинным',
+                        description: 'Очень длинное описание. Вот прям очень длинное, очень длинное, очень длинное, очень длинное, очень длинное, очень длинное, очень длинное.'
+                    },
+                    {key: 2, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {key: 3, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {key: 4, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {key: 5, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {key: 6, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {key: 7, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {key: 8, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'},
+                    {key: 9, title: 'Новый проект', description: 'Описание проекта очень длинное, очень длинное'}
+                ]
+            });
+        }, 300)
     }
 
-    openConstructor(key) {
-        this.pageChange('Constructor', this._getConfig.bind(this, key));
+    _openConstructor(projectData) {
+        this.appHandlers.pageChange('Constructor', {key: projectData.key, title: projectData.title});
     }
 
-    render() {
+    getRender() {
         return (
             <div className="Main">
-                <Scrollbar style={{ width: '100%', height: '100%' }}>
+                <Scrollbar style={{width: '100%', height: '100%'}}>
                     <div className="Main-scrollContainer">
-                        {this.config.projects.map((project) =>
-                            <div key={project.key} className="Main-project" onClick={this.openConstructor.bind(this, project.key)}>
+                        {this.pageData.projects.map((project) =>
+                            <div key={project.key} className="Main-project"
+                                 onClick={this._openConstructor.bind(this, project)}>
                                 <div className="Main-project-title" title={project.title}>{project.title}</div>
                                 <div className="Main-project-description">{project.description}</div>
                             </div>

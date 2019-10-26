@@ -1,45 +1,52 @@
-import React, {Component} from 'react';
+import React from 'react';
 import * as PagesLib from './page'
-import ErrorPage from './components/ErrorPage';
-import {ReactComponent as LoadingAnimation} from './lib/loading.svg';
+import ErrorPage from './components/ErrorPage/ErrorPage';
+import {ReactComponent as BackIcon} from './lib/back.svg';
 
-export default class Application extends Component {
+export default class Application extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageComponent: this._exportFromLib(PagesLib, props.pageName),
-            pageConfig: props.pageConfig,
+            pageComponent: this._exportFromLib(PagesLib, props.startPage),
+            pageConfig: props.config,
             loading: false,
-            loadingTransparent: true
+            loadingTransparent: true,
+            route: [{
+                page: props.startPage,
+                config: props.config
+            }],
+            title: props.config.title,
         }
     };
 
-    asyncChangePage(pageName, asyncFunction) {
-        let loadingTimeout;
-        new Promise(resolve => {
-            this.setState({loading: true});
-            loadingTimeout = setTimeout(() => {
-                this.setState({loadingTransparent: false});
-            }, 0);
-            asyncFunction(resolve);
-        }).then(result => {
-            clearTimeout(loadingTimeout);
-            this.setState({loadingTransparent: true});
-            setTimeout(() => {
-                this.setState({loading: false});
-            }, 300);
-            this._changePage(pageName, result)
+    _pageChange(pageName, pageConfig) {
+        const route = this.state.route;
+        let nextPage = {
+            page: pageName,
+            config: pageConfig
+        };
+        if (!pageName) {
+            route.pop();
+            nextPage = route.pop();
+        }
+        route.push(nextPage);
+        const pageComponent = this._exportFromLib(PagesLib, nextPage.page);
+        const newState = {
+            pageComponent: pageComponent ? pageComponent : ErrorPage,
+            pageConfig: pageComponent ? nextPage.config : {moduleName: nextPage.page}
+        };
+        this.setState({
+            ...newState,
+            title: nextPage.config.title
         });
     };
 
-    _changePage(pageName, pageConfig) {
-        const pageComponent = this._exportFromLib(PagesLib, pageName);
-        const newState = {
-            pageComponent: pageComponent ? pageComponent : ErrorPage,
-            pageConfig: pageComponent ? pageConfig : {moduleName: pageName}
-        };
-        this.setState(newState);
-    };
+    _goBack() {
+        this.setState({
+            navBarActions: undefined
+        });
+        this._pageChange();
+    }
 
     _exportFromLib(lib, module) {
         if (lib.hasOwnProperty(module)) {
@@ -56,15 +63,16 @@ export default class Application extends Component {
         ];
     };
 
-    _getMaskClassName() {
-        if (this.state.loading) {
-            if (this.state.loadingTransparent) {
-                return 'App-body-page-mask-transparent'
-            } else {
-                return 'App-body-page-mask-loading';
-            }
-        } else {
-            return 'App-body-page-mask-hidden';
+    _setNavBarActions(actions = null) {
+        this.setState({
+            navBarActions: actions
+        })
+    }
+
+    _getAppHandlers() {
+        return {
+            pageChange: this._pageChange.bind(this),
+            setNavBarActions: this._setNavBarActions.bind(this)
         }
     }
 
@@ -74,13 +82,17 @@ export default class Application extends Component {
             <div className="App">
                 <div className="App-body">
                     <div className="App-body-navBar">
-                    </div>
-                    <div className="App-body-page">
-                        <div className={this._getMaskClassName()}>
-                            <LoadingAnimation className="App-body-page-loadingAnimation"/>
+                        <div className={this.state.route.length > 1 ?
+                            'App-body-navBar-backButton' :
+                            'App-body-navBar-backButton-hidden'}
+                             onClick={this._goBack.bind(this)}><BackIcon/></div>
+                        {this.state.title &&
+                        <div className="App-body-navBar-title" title={this.state.title}>{this.state.title}</div>}
+                        <div className="App-body-navBar-actions">
+                            {this.state.navBarActions}
                         </div>
-                        <PageComponent config={PageConfig} pageChange={this.asyncChangePage.bind(this)}/>
                     </div>
+                    <PageComponent config={PageConfig} appHandlers={this._getAppHandlers()}/>
                 </div>
                 <div className="App-menu">
 
