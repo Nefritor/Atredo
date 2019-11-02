@@ -1,7 +1,7 @@
 import React from 'react';
-import * as PagesLib from './page'
-import ErrorPage from './components/ErrorPage/ErrorPage';
-import {ReactComponent as BackIcon} from './lib/back.svg';
+import * as PagesLib from 'page'
+import ErrorPage from 'components/ErrorPage/ErrorPage';
+import {ReactComponent as BackIcon} from 'lib/back.svg';
 
 export default class Application extends React.Component {
     constructor(props) {
@@ -9,8 +9,6 @@ export default class Application extends React.Component {
         this.state = {
             pageComponent: this._exportFromLib(PagesLib, props.startPage),
             pageConfig: props.config,
-            loading: false,
-            loadingTransparent: true,
             route: [{
                 page: props.startPage,
                 config: props.config

@@ -1,8 +1,8 @@
 import React from 'react';
 import Base from '../Base';
 import Scrollbar from 'react-scrollbars-custom';
-import ProjectStage from '../../components/ProjectStage/ProjectStage';
-import {ReactComponent as ImagePlus} from "../../lib/plus.svg";
+import ProjectStage from 'components/ProjectStage/ProjectStage';
+import {ReactComponent as ImagePlus} from 'lib/plus.svg';
 import './Constructor.css';
 
 export default class Constructor extends Base {
@@ -10,8 +10,33 @@ export default class Constructor extends Base {
         setTimeout(() => {
             resolve({
                 stages: [
-                    {key: 0, title: 'Заморозка'},
-                    {key: 1, title: 'Разморозка'}
+                    {
+                        key: 0,
+                        title: 'Заморозка',
+                        actions: [
+                            {
+                                key: 0,
+                                title: 'Открываем холодильник',
+                                description: 'Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю. Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю. Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю.',
+                                actor: 'Врач-анастезиолог',
+                                object: 'Холодильник',
+                                action: 'Открыть'
+                            },
+                            {
+                                key: 1,
+                                title: 'Кладем в холодильник',
+                                description: 'И это тоже описание',
+                                actor: 'Врач-неанастезиолог',
+                                object: 'Торт',
+                                action: 'Положить'
+                            }
+                        ]
+                    },
+                    {
+                        key: 1,
+                        title: 'Разморозка',
+                        actions: []
+                    }
                 ]
             });
             this.setState({
@@ -21,7 +46,7 @@ export default class Constructor extends Base {
     }
 
     getNavBarActions() {
-        return <div className="App-body-navBar-actions-addButton"><ImagePlus /></div>;
+        return <div className="App-body-navBar-actions-addButton"><ImagePlus/></div>;
     }
 
     getRender() {
@@ -29,9 +54,11 @@ export default class Constructor extends Base {
             <div className="Constructor">
                 <Scrollbar style={{width: '100%', height: '100%'}}>
                     <div className="Constructor-scrollContainer">
-                        {this.pageData.stages.map((stage) =>
-                            <ProjectStage key={stage.key} stageData={stage}/>
-                        )}
+                        <div className="Constructor-stagesLine">
+                            {this.pageData.stages.map((stage) =>
+                                <ProjectStage key={stage.key} stageData={stage}/>
+                            )}
+                        </div>
                     </div>
                 </Scrollbar>
             </div>

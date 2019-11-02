@@ -35,6 +35,7 @@ code {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 .App-body-navBar {
   height: 49px;
@@ -65,6 +66,9 @@ code {
 .App-body-navBar-backButton:hover .back-button,
 .App-body-navBar-backButton-hidden:hover .back-button {
   fill: #999;
+}
+.App-body-navBar-backButton:active .back-button,
+.App-body-navBar-backButton-hidden:active .back-button {
   transform: translateX(-3px);
 }
 .App-body-navBar-title {
@@ -100,10 +104,15 @@ code {
   border-radius: 0 0 0 5px;
   box-shadow: inset 0 0 15px -3px #00000033;
 }
-.App-body-page-mask-hidden {
+.App-body-page-loadingAnimation {
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+}
+.App-body-page-loadingAnimation-hidden {
   display: none;
 }
-.App-body-page-mask-loading {
+.App-body-page-loadingAnimation-loading {
   display: flex;
   opacity: 1;
   position: absolute;
@@ -114,7 +123,7 @@ code {
   justify-content: center;
   transition: opacity 0.3s ease;
 }
-.App-body-page-mask-transparent {
+.App-body-page-loadingAnimation-transparent {
   display: flex;
   opacity: 0;
   position: absolute;
@@ -125,10 +134,38 @@ code {
   justify-content: center;
   transition: opacity 0.3s ease;
 }
-.App-body-page-loadingAnimation {
-  width: 500px;
-  height: 500px;
-  margin: 0 auto;
+.App-body-page-popup {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #0006;
+}
+.App-body-page-popup-hidden {
+  display: none;
+}
+.App-body-page-popup-loading {
+  display: flex;
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+  background-color: #00000099;
+}
+.App-body-page-popup-transparent {
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+  background-color: #00000099;
 }
 .App-menu {
   width: 299px;
