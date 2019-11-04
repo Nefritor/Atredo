@@ -1,6 +1,5 @@
 import React from 'react';
 import {ReactComponent as LoadingAnimation} from "lib/loading.svg";
-import Popup from "components/Popup/Popup";
 
 export default class Base extends React.Component {
     constructor(props) {
@@ -18,6 +17,10 @@ export default class Base extends React.Component {
             },
             navBarActions: undefined
         };
+        this.reloadPage();
+    }
+
+    reloadPage(config = this.props.config) {
         let loadingTimeout;
         new Promise(resolve => {
             loadingTimeout = setTimeout(() => {
@@ -28,7 +31,7 @@ export default class Base extends React.Component {
                     }
                 });
             }, 0);
-            this.getData(this.props.config, resolve);
+            this.getData(config, resolve);
         }).then(pageData => {
             this.pageData = pageData;
             clearTimeout(loadingTimeout);
@@ -51,36 +54,12 @@ export default class Base extends React.Component {
         })
     }
 
-    closePopup(data) {
-        if (this.closePopupResolver) {
-            this.closePopupResolver(data);
-            this.closePopupResolver = undefined;
-            this.setState({
-                popup: {
-                    show: true,
-                    transparent: true
-                }
-            });
-            setTimeout(() => {
-                this.setState({
-                    popupComponent: undefined,
-                    popup: {
-                        show: false,
-                        transparent: true
-                    }
-                });
-            }, 300);
-        } else {
-            console.warn('There is no active popup')
-        }
-    }
-
-    openPopup() {
+    openPopup(data = {}) {
         return new Promise((resolve, reject) => {
             if (this.state.popup.show === false && this.getPopupTemplate) {
                 this.setState({
-                    popupComponent:
-                        <Popup onPopupClose={this.closePopup.bind(this)} template={this.getPopupTemplate.bind(this)}/>,
+                    popupComponent: this.getPopupTemplate.bind(this),
+                    popupData: data,
                     popup: {
                         show: true,
                         transparent: true
@@ -99,10 +78,50 @@ export default class Base extends React.Component {
                 console.warn('Popup opening try has been observed and cancelled');
                 reject();
             } else {
-                console.warn('Trying to open popup without template setting');
+                console.warn('Trying to open popup without template');
                 reject();
             }
         });
+    }
+
+    popupDataChange(popupProp, event) {
+        this.setState({
+            popupData: {
+                ...this.state.popupData,
+                [popupProp]: event.target.value
+            }
+        })
+    }
+
+    getPopupPropValue(name) {
+        return this.state.popupData[name];
+    }
+
+    closePopup(forceClose = false) {
+        if (this.closePopupResolver) {
+            if (!forceClose) {
+                this.closePopupResolver(this.state.popupData);
+            }
+            this.closePopupResolver = undefined;
+            this.setState({
+                popup: {
+                    show: true,
+                    transparent: true
+                }
+            });
+            setTimeout(() => {
+                this.setState({
+                    popupComponent: undefined,
+                    popupData: undefined,
+                    popup: {
+                        show: false,
+                        transparent: true
+                    }
+                });
+            }, 300);
+        } else {
+            console.warn('There is no active popup')
+        }
     }
 
     getData() {
@@ -133,7 +152,7 @@ export default class Base extends React.Component {
 
     getPopup() {
         return <div className={`App-body-page-popup ${this.getLoadingClassName(this.state.popup, 'App-body-page-popup')}`}>
-            {this.state.popupComponent}
+            <this.state.popupComponent/>
         </div>
     }
 

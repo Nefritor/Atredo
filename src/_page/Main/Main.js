@@ -15,12 +15,51 @@ export default class Main extends Base {
         });
     }
 
+    getPopupTemplate() {
+        return <div className="Main-projectAdd">
+            <div className="Main-projectAdd-head">
+                Добавить проект
+            </div>
+            <div className="Main-projectAdd-body">
+                <div className="Main-projectAdd-body-row">
+                    <span className="Main-projectAdd-body-row-name">Название</span>
+                    <input className="Main-projectAdd-body-row-input"
+                           value={this.getPopupPropValue('title')}
+                           onChange={this.popupDataChange.bind(this, 'title')}/>
+                </div>
+                <div className="Main-projectAdd-body-row">
+                    <span className="Main-projectAdd-body-row-name">Описание</span>
+                    <textarea className="Main-projectAdd-body-row-textarea"
+                           value={this.getPopupPropValue('description')}
+                           onChange={this.popupDataChange.bind(this, 'description')}/>
+                </div>
+            </div>
+            <div className="Main-projectAdd-footer">
+                <div className="Main-projectAdd-footer-button buttonOK" onClick={this.confirmAdd.bind(this)}>ОК</div>
+                <div className="Main-projectAdd-footer-button buttonCancel" onClick={this.cancelAdd.bind(this)}>Отмена
+                </div>
+            </div>
+        </div>;
+    }
+
+    confirmAdd() {
+        this.closePopup();
+    }
+
+    cancelAdd() {
+        this.closePopup(true);
+    }
+
     _openConstructor(projectData) {
         this.appHandlers.pageChange('Constructor', {key: projectData.key, title: projectData.title});
     }
 
-    getPopupTemplate() {
-        return <div>Жопа</div>;
+    _addProject() {
+        this.openPopup({title: '', description: ''}).then((result) => {
+            MainRPC.addProject(result).then(() => {
+                this.reloadPage();
+            })
+        });
     }
 
     getRender() {
@@ -35,7 +74,7 @@ export default class Main extends Base {
                                 <div className="Main-project-description">{project.description}</div>
                             </div>
                         )}
-                        <div className="Main-project Main-project-image" onClick={this.openPopup.bind(this)}>
+                        <div className="Main-project Main-project-image" onClick={this._addProject.bind(this)}>
                             <ImagePlus className="Main-project-image-plus"/>
                         </div>
                     </div>

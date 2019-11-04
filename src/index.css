@@ -2,6 +2,10 @@
   font-family: ProductSans;
   src: url('./lib/ProductSans.ttf');
 }
+input,
+textarea {
+  font-family: ProductSans, serif;
+}
 body {
   overflow: hidden;
   margin: 0;

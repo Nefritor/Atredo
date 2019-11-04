@@ -19,6 +19,7 @@ export default class Base {
             case 'getProjectList':
                 return this.getJsonFromLocalStorage('Projects');
             case 'addProject':
+                return this.addItemToLocalStorage('Projects', data);
                 break;
         }
     }
@@ -29,7 +30,8 @@ export default class Base {
 
     static addItemToLocalStorage(key, data) {
         const storageData = this.getJsonFromLocalStorage(key);
-        storageData.push(data);
-        localStorage.setItem('key', JSON.stringify(storageData));
+        const maxKeyValue = Math.max(...storageData.map(x => x.key)) || -1;
+        storageData.push({key: maxKeyValue + 1, ...data});
+        localStorage.setItem(key, JSON.stringify(storageData));
     }
 }
