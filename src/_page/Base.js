@@ -21,44 +21,51 @@ export default class Base extends React.Component {
     }
 
     reloadPage(config = this.props.config) {
-        let loadingTimeout;
         new Promise(resolve => {
-            loadingTimeout = setTimeout(() => {
-                this.setState({
-                    loading: {
-                        show: true,
-                        transparent: false
-                    }
-                });
-            }, 0);
+            this.startLoading();
             this.getData(config, resolve);
         }).then(pageData => {
             this.pageData = pageData;
-            clearTimeout(loadingTimeout);
-            this.setState({
-                loading: {
-                    show: true,
-                    transparent: true
-                },
-                dataReady: true
-            });
             this.appHandlers.setNavBarActions(this.state.navBarActions);
-            setTimeout(() => {
-                this.setState({
-                    loading: {
-                        show: false,
-                        transparent: true
-                    }
-                });
-            }, 300);
+            this.stopLoading();
         })
     }
 
-    openPopup(data = {}) {
+    startLoading() {
+        this.loadingTimeout = setTimeout(() => {
+            this.setState({
+                loading: {
+                    show: true,
+                    transparent: false
+                }
+            });
+        }, 0);
+    }
+
+    stopLoading() {
+        clearTimeout(this.loadingTimeout);
+        this.setState({
+            loading: {
+                show: true,
+                transparent: true
+            },
+            dataReady: true
+        });
+        setTimeout(() => {
+            this.setState({
+                loading: {
+                    show: false,
+                    transparent: true
+                }
+            });
+        }, 300);
+    }
+
+    openPopup(popupTemplate, data = {}) {
         return new Promise((resolve, reject) => {
-            if (this.state.popup.show === false && this.getPopupTemplate) {
+            if (this.state.popup.show === false && popupTemplate) {
                 this.setState({
-                    popupComponent: this.getPopupTemplate.bind(this),
+                    popupComponent: popupTemplate,
                     popupData: data,
                     popup: {
                         show: true,
@@ -74,7 +81,7 @@ export default class Base extends React.Component {
                     });
                 }, 0);
                 this.closePopupResolver = resolve.bind(this);
-            } else if (this.getPopupTemplate) {
+            } else if (popupTemplate) {
                 console.warn('Popup opening try has been observed and cancelled');
                 reject();
             } else {
@@ -84,13 +91,33 @@ export default class Base extends React.Component {
         });
     }
 
+    popupHandlers() {
+        return {
+            open: this.openPopup.bind(this),
+            close: this.closePopup.bind(this),
+            getValue: this.getPopupPropValue.bind(this),
+            setValue: this.setPopupPropValue.bind(this)
+        }
+    }
+
+    loadingHandlers() {
+        return {
+            start: this.startLoading.bind(this),
+            stop: this.stopLoading.bind(this)
+        }
+    }
+
     popupDataChange(popupProp, event) {
+        this.setPopupPropValue(popupProp, event.target.value);
+    }
+
+    setPopupPropValue(popupProp, value) {
         this.setState({
             popupData: {
                 ...this.state.popupData,
-                [popupProp]: event.target.value
+                [popupProp]: value
             }
-        })
+        });
     }
 
     getPopupPropValue(name) {
@@ -124,6 +151,12 @@ export default class Base extends React.Component {
         }
     }
 
+    popupBackgroundClick(event) {
+        if (event.target.id === 'popupBackground') {
+            this.closePopup(true);
+        }
+    }
+
     getData() {
         throw Error('Data getter must be declared inside child component');
     }
@@ -151,7 +184,9 @@ export default class Base extends React.Component {
     }
 
     getPopup() {
-        return <div className={`App-body-page-popup ${this.getLoadingClassName(this.state.popup, 'App-body-page-popup')}`}>
+        return <div className={`App-body-page-popup ${this.getLoadingClassName(this.state.popup, 'App-body-page-popup')}`}
+                    onClick={this.popupBackgroundClick.bind(this)}
+                    id="popupBackground">
             <this.state.popupComponent/>
         </div>
     }

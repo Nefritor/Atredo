@@ -1,3 +1,33 @@
+.col-1 {
+  width: 10%;
+}
+.col-2 {
+  width: 20%;
+}
+.col-3 {
+  width: 30%;
+}
+.col-4 {
+  width: 40%;
+}
+.col-5 {
+  width: 50%;
+}
+.col-6 {
+  width: 60%;
+}
+.col-7 {
+  width: 70%;
+}
+.col-8 {
+  width: 80%;
+}
+.col-9 {
+  width: 90%;
+}
+.col-10 {
+  width: 100%;
+}
 @font-face {
   font-family: ProductSans;
   src: url('./lib/ProductSans.ttf');
@@ -32,6 +62,7 @@ code {
   box-shadow: 0 0 20px -5px #00000033;
   display: flex;
   background-color: #fff;
+  overflow: hidden;
 }
 .App-body {
   width: 100%;
@@ -170,6 +201,143 @@ code {
   justify-content: center;
   transition: opacity 0.3s ease;
   background-color: #00000099;
+}
+.App-body-page .Popup {
+  width: 500px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.App-body-page .Popup-head {
+  padding: 10px 15px;
+  font-size: 20px;
+  border-bottom: 1px solid #dedede;
+}
+.App-body-page .Popup-body {
+  max-height: 500px;
+}
+.App-body-page .Popup-body-heading {
+  display: flex;
+  border-bottom: 1px solid #dedede;
+  font-size: 15px;
+}
+.App-body-page .Popup-body-heading-column {
+  padding: 2px 10px;
+}
+.App-body-page .Popup-body-rowItem {
+  display: flex;
+  border-bottom: 1px solid #dedede;
+  font-size: 19px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.App-body-page .Popup-body-rowItem:hover {
+  background-color: #0001;
+  box-shadow: inset 0 0 5px -3px #0002;
+}
+.App-body-page .Popup-body-rowItem:active {
+  background-color: #0002;
+  box-shadow: inset 0 0 5px -3px #0004;
+}
+.App-body-page .Popup-body-rowItem-column {
+  padding: 2px 10px;
+}
+.App-body-page .Popup-body-rowItem-button {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  text-align: center;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 14px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.App-body-page .Popup-body-rowItem-button:hover {
+  background-color: #0001;
+  box-shadow: inset 0 0 5px -3px #0002;
+}
+.App-body-page .Popup-body-rowItem-button:active {
+  background-color: #0002;
+  box-shadow: inset 0 0 5px -3px #0004;
+}
+.App-body-page .Popup-body-row {
+  padding: 10px 15px;
+  display: flex;
+}
+.App-body-page .Popup-body-row-name {
+  width: 120px;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.App-body-page .Popup-body-row-input,
+.App-body-page .Popup-body-row-textarea {
+  border: none;
+  border-bottom: 1px solid #dedede;
+  outline: none;
+  font-size: 14px;
+  transition: border-bottom-color 0.3s ease;
+}
+.App-body-page .Popup-body-row-input:focus,
+.App-body-page .Popup-body-row-textarea:focus {
+  border-bottom-color: #afafaf;
+}
+.App-body-page .Popup-body-row-textarea {
+  flex-grow: 1;
+  margin-right: -17px;
+}
+.App-body-page .Popup-body-row-textarea-scroll {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+.App-body-page .Popup-body-row-accept {
+  height: 25px;
+  padding: 0 8px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.App-body-page .Popup-body-row-accept:hover {
+  background-color: #0001;
+  box-shadow: inset 0 0 5px -3px #0002;
+}
+.App-body-page .Popup-body-row-accept:active {
+  background-color: #0002;
+  box-shadow: inset 0 0 5px -3px #0004;
+}
+.App-body-page .Popup-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+.App-body-page .Popup-footer-button {
+  width: 75px;
+  padding: 5px;
+  background-color: #eaeaea;
+  border-radius: 5px;
+  text-align: center;
+  margin-left: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.App-body-page .Popup-footer-button:hover {
+  background-color: #efefef;
+}
+.App-body-page .Popup-footer-button:hover:active {
+  background-color: #afafaf;
+  color: #fff;
 }
 .App-menu {
   width: 299px;

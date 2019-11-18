@@ -1,7 +1,6 @@
 import React from 'react';
 import Base from '../Base';
 import Scrollbar from 'react-scrollbars-custom';
-import Popup from 'components/Popup/Popup';
 import {MainRPC} from 'rpc';
 import {ReactComponent as ImagePlus} from 'lib/plus.svg';
 import './Main.css'
@@ -16,27 +15,29 @@ export default class Main extends Base {
     }
 
     getPopupTemplate() {
-        return <div className="Main-projectAdd">
-            <div className="Main-projectAdd-head">
+        return <div className="Popup">
+            <div className="Popup-head">
                 Добавить проект
             </div>
-            <div className="Main-projectAdd-body">
-                <div className="Main-projectAdd-body-row">
-                    <span className="Main-projectAdd-body-row-name">Название</span>
-                    <input className="Main-projectAdd-body-row-input"
+            <div className="Popup-body">
+                <div className="Popup-body-row">
+                    <span className="Popup-body-row-name">Название</span>
+                    <input className="Popup-body-row-input"
                            value={this.getPopupPropValue('title')}
                            onChange={this.popupDataChange.bind(this, 'title')}/>
                 </div>
-                <div className="Main-projectAdd-body-row">
-                    <span className="Main-projectAdd-body-row-name">Описание</span>
-                    <textarea className="Main-projectAdd-body-row-textarea"
+                <div className="Popup-body-row">
+                    <span className="Popup-body-row-name">Описание</span>
+                    <div className="Popup-body-row-textarea-scroll">
+                    <textarea className="Popup-body-row-textarea"
                            value={this.getPopupPropValue('description')}
                            onChange={this.popupDataChange.bind(this, 'description')}/>
+                    </div>
                 </div>
             </div>
-            <div className="Main-projectAdd-footer">
-                <div className="Main-projectAdd-footer-button buttonOK" onClick={this.confirmAdd.bind(this)}>ОК</div>
-                <div className="Main-projectAdd-footer-button buttonCancel" onClick={this.cancelAdd.bind(this)}>Отмена
+            <div className="Popup-footer">
+                <div className="Popup-footer-button buttonOK" onClick={this.confirmAdd.bind(this)}>ОК</div>
+                <div className="Popup-footer-button buttonCancel" onClick={this.cancelAdd.bind(this)}>Отмена
                 </div>
             </div>
         </div>;
@@ -55,10 +56,14 @@ export default class Main extends Base {
     }
 
     _addProject() {
-        this.openPopup({title: '', description: ''}).then((result) => {
-            MainRPC.addProject(result).then(() => {
-                this.reloadPage();
-            })
+        this.openPopup(this.getPopupTemplate.bind(this), {title: '', description: ''}).then((result) => {
+            if (result.title === '') {
+                /// нет заголовка
+            } else {
+                MainRPC.addProject(result).then(() => {
+                    this.reloadPage();
+                })
+            }
         });
     }
 

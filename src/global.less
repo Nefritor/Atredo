@@ -4,3 +4,25 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+@button: {
+  cursor: pointer;
+  transition: background-color .3s ease;
+  user-select: none;
+  &:hover {
+    background-color: #0001;
+    box-shadow: inset 0 0 5px -3px #0002;
+  }
+  &:active {
+    background-color: #0002;
+    box-shadow: inset 0 0 5px -3px #0004;
+  }
+}
+
+.col {
+  each(range(1, 10), {
+    &-@{value} {
+      width: (@value * 10%);
+    }
+  })
+}

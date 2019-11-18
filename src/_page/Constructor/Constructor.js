@@ -13,29 +13,29 @@ export default class Constructor extends Base {
                     {
                         key: 0,
                         title: 'Заморозка',
-                        actions: [
+                        operations: [
                             {
                                 key: 0,
                                 title: 'Открываем холодильник',
                                 description: 'Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю. Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю. Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю.',
-                                actor: 'Врач-анастезиолог',
-                                object: 'Холодильник',
-                                action: 'Открыть'
+                                actor: -1,
+                                object: -1,
+                                action: -1
                             },
                             {
                                 key: 1,
                                 title: 'Кладем в холодильник',
                                 description: 'И это тоже описание',
-                                actor: 'Врач-неанастезиолог',
-                                object: 'Торт',
-                                action: 'Положить'
+                                actor: -1,
+                                object: -1,
+                                action: -1
                             }
                         ]
                     },
                     {
                         key: 1,
                         title: 'Разморозка',
-                        actions: []
+                        operations: []
                     }
                 ]
             });
@@ -56,7 +56,10 @@ export default class Constructor extends Base {
                     <div className="Constructor-scrollContainer">
                         <div className="Constructor-stagesLine">
                             {this.pageData.stages.map((stage) =>
-                                <ProjectStage key={stage.key} stageData={stage}/>
+                                <ProjectStage key={stage.key}
+                                              stageData={stage}
+                                              popupHandlers={this.popupHandlers.bind(this)}
+                                              loadingHandlers={this.loadingHandlers.bind(this)}/>
                             )}
                         </div>
                     </div>
