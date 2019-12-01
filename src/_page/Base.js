@@ -25,7 +25,9 @@ export default class Base extends React.Component {
             this.startLoading();
             this.getData(config, resolve);
         }).then(pageData => {
-            this.pageData = pageData;
+            this.setState({
+                pageData
+            });
             this.appHandlers.setNavBarActions(this.state.navBarActions);
             this.stopLoading();
         })
@@ -80,6 +82,7 @@ export default class Base extends React.Component {
                         }
                     });
                 }, 0);
+                this.popupDataReady = Promise.resolve();
                 this.closePopupResolver = resolve.bind(this);
             } else if (popupTemplate) {
                 console.warn('Popup opening try has been observed and cancelled');
@@ -91,10 +94,47 @@ export default class Base extends React.Component {
         });
     }
 
+    closePopup(forceClose = false) {
+        if (this.closePopupResolver) {
+            this.popupDataReady.then(() => {
+                if (!forceClose) {
+                    this.closePopupResolver(this.state.popupData);
+                }
+                this.closePopupResolver = undefined;
+                this.setState({
+                    popup: {
+                        show: true,
+                        transparent: true
+                    }
+                });
+                setTimeout(() => {
+                    this.setState({
+                        popupComponent: undefined,
+                        popupData: undefined,
+                        popup: {
+                            show: false,
+                            transparent: true
+                        }
+                    });
+                }, 300);
+            });
+        } else {
+            console.warn('There is no active popup')
+        }
+    }
+
+    updatePopup(popupTemplate = this.state.popupComponent, data = this.state.popupData) {
+        this.setState({
+            popupComponent: popupTemplate,
+            popupData: data
+        });
+    }
+
     popupHandlers() {
         return {
             open: this.openPopup.bind(this),
             close: this.closePopup.bind(this),
+            update: this.updatePopup.bind(this),
             getValue: this.getPopupPropValue.bind(this),
             setValue: this.setPopupPropValue.bind(this)
         }
@@ -112,43 +152,20 @@ export default class Base extends React.Component {
     }
 
     setPopupPropValue(popupProp, value) {
-        this.setState({
-            popupData: {
-                ...this.state.popupData,
-                [popupProp]: value
-            }
+        this.popupDataReady = new Promise((resolve) => {
+            this.setState({
+                popupData: {
+                    ...this.state.popupData,
+                    [popupProp]: value
+                }
+            }, () => {
+                resolve();
+            });
         });
     }
 
     getPopupPropValue(name) {
         return this.state.popupData[name];
-    }
-
-    closePopup(forceClose = false) {
-        if (this.closePopupResolver) {
-            if (!forceClose) {
-                this.closePopupResolver(this.state.popupData);
-            }
-            this.closePopupResolver = undefined;
-            this.setState({
-                popup: {
-                    show: true,
-                    transparent: true
-                }
-            });
-            setTimeout(() => {
-                this.setState({
-                    popupComponent: undefined,
-                    popupData: undefined,
-                    popup: {
-                        show: false,
-                        transparent: true
-                    }
-                });
-            }, 300);
-        } else {
-            console.warn('There is no active popup')
-        }
     }
 
     popupBackgroundClick(event) {
@@ -184,9 +201,10 @@ export default class Base extends React.Component {
     }
 
     getPopup() {
-        return <div className={`App-body-page-popup ${this.getLoadingClassName(this.state.popup, 'App-body-page-popup')}`}
-                    onClick={this.popupBackgroundClick.bind(this)}
-                    id="popupBackground">
+        return <div
+            className={`App-body-page-popup ${this.getLoadingClassName(this.state.popup, 'App-body-page-popup')}`}
+            onClick={this.popupBackgroundClick.bind(this)}
+            id="popupBackground">
             <this.state.popupComponent/>
         </div>
     }

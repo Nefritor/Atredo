@@ -5,31 +5,45 @@ import './Actor.css';
 export default class Actor extends React.Component {
     constructor(props) {
         super(props);
-        this.id = props.id;
         this.openSelector = props.openSelector.bind(this);
-        OperationRPC.getActor(this.id).then((data) => {
+        if (props.id !== -1) {
+            this.setData(this.props.id);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.id !== this.props.id) {
+            this.setData(this.props.id);
+        }
+    }
+
+    setData(id) {
+        OperationRPC.getActor(id).then((data) => {
             this.setState({
-                actor: data
+                actor: data,
+                id: this.props.id
             });
         })
     }
 
     render() {
         return (
-            this.id !== -1 ?
-                <div className="Actor">
-                    {this.state.actor ?
+            this.props.id !== -1 ?
+                this.state && this.state.id !== -1 ?
+                    <div className="Actor">
+                        {this.state.actor &&
                         <div>
-                            Загрузка
+                            {this.state.actor.title}
                         </div>
-                        :
-                        <div>
-                            {this.state.actor.name}
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
+                    :
+                    <div>
+                        Загрузка
+                    </div>
                 :
-                <div className="Actor-EmptyData ProjectStage-operation-container-activeArea" onClick={this.openSelector}>
+                <div className="Actor-EmptyData ProjectStage-operation-container-activeArea"
+                     onClick={this.openSelector}>
                     Выбрать исполнителя
                 </div>
         )

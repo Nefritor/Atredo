@@ -153,7 +153,7 @@ code {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 99;
   flex-direction: column;
   justify-content: center;
   transition: opacity 0.3s ease;
@@ -164,7 +164,7 @@ code {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 99;
   flex-direction: column;
   justify-content: center;
   transition: opacity 0.3s ease;
@@ -184,7 +184,7 @@ code {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 99;
   flex-direction: column;
   justify-content: center;
   transition: opacity 0.3s ease;
@@ -196,7 +196,7 @@ code {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 99;
   flex-direction: column;
   justify-content: center;
   transition: opacity 0.3s ease;
@@ -207,6 +207,7 @@ code {
   background-color: #fff;
   border-radius: 5px;
   margin: 0 auto;
+  overflow: hidden;
 }
 .App-body-page .Popup-head {
   padding: 10px 15px;
@@ -287,7 +288,10 @@ code {
 }
 .App-body-page .Popup-body-row-textarea {
   flex-grow: 1;
-  margin-right: -17px;
+  resize: none;
+}
+.App-body-page .Popup-body-row-textarea::-webkit-scrollbar {
+  display: none;
 }
 .App-body-page .Popup-body-row-textarea-scroll {
   width: 100%;
@@ -318,7 +322,6 @@ code {
 }
 .App-body-page .Popup-footer {
   display: flex;
-  justify-content: flex-end;
   padding: 10px;
 }
 .App-body-page .Popup-footer-button {
@@ -338,6 +341,9 @@ code {
 .App-body-page .Popup-footer-button:hover:active {
   background-color: #afafaf;
   color: #fff;
+}
+.App-body-page .Popup-footer-rightAlign {
+  justify-content: flex-end;
 }
 .App-menu {
   width: 299px;

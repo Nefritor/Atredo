@@ -9,7 +9,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 99;
   flex-direction: column;
   justify-content: center;
   transition: opacity .3s ease;
@@ -187,6 +187,7 @@ code {
         background-color: #fff;
         border-radius: 5px;
         margin: 0 auto;
+        overflow: hidden;
 
         &-head {
           padding: 10px 15px;
@@ -252,7 +253,10 @@ code {
 
             &-textarea {
               flex-grow: 1;
-              margin-right: -17px;
+              resize: none;
+              &::-webkit-scrollbar {
+                display: none;
+              }
 
               &-scroll {
                 width: 100%;
@@ -278,7 +282,6 @@ code {
 
         &-footer {
           display: flex;
-          justify-content: flex-end;
           padding: 10px;
 
           &-button {
@@ -300,6 +303,10 @@ code {
                 color: #fff
               }
             }
+          }
+
+          &-rightAlign {
+            justify-content: flex-end;
           }
         }
       }

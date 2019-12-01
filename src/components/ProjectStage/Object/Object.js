@@ -5,32 +5,46 @@ import './Object.css';
 export default class Object extends React.Component {
     constructor(props) {
         super(props);
-        this.id = props.id;
         this.openSelector = props.openSelector.bind(this);
-        OperationRPC.getObject(this.id).then((data) => {
+        if (props.id !== -1) {
+            this.setData(this.props.id);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.id !== this.props.id) {
+            this.setData(this.props.id);
+        }
+    }
+
+    setData(id) {
+        OperationRPC.getObject(id).then((data) => {
             this.setState({
-                object: data
+                object: data,
+                id: this.props.id
             });
         })
     }
 
     render() {
         return (
-            this.id !== -1 ?
-                <div className="Object">
-                    {this.state.object ?
-                        <div>
-                            Загрузка
+            this.props.id !== -1 ?
+                this.state && this.state.id !== -1 ?
+                    <div className="Object">
+                        {this.state.object &&
+                        <div className="ProjectStage-operation-container-activeArea-loading">
+                            {this.state.object.title}
                         </div>
-                        :
-                        <div>
-                            {this.state.object.name}
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
+                    :
+                    <div>
+                        Загрузка
+                    </div>
                 :
-                <div className="Object-EmptyData ProjectStage-operation-container-activeArea" onClick={this.openSelector}>
-                    Выбрать объект
+                <div className="Object-EmptyData ProjectStage-operation-container-activeArea"
+                     onClick={this.openSelector}>
+                    Выбрать исполнителя
                 </div>
         )
     }

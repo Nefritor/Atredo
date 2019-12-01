@@ -14,7 +14,7 @@ export default class Main extends Base {
         });
     }
 
-    getPopupTemplate() {
+    getAddProjectPopupTemplate() {
         return <div className="Popup">
             <div className="Popup-head">
                 Добавить проект
@@ -35,7 +35,7 @@ export default class Main extends Base {
                     </div>
                 </div>
             </div>
-            <div className="Popup-footer">
+            <div className="Popup-footer Popup-footer-rightAlign">
                 <div className="Popup-footer-button buttonOK" onClick={this.confirmAdd.bind(this)}>ОК</div>
                 <div className="Popup-footer-button buttonCancel" onClick={this.cancelAdd.bind(this)}>Отмена
                 </div>
@@ -56,7 +56,7 @@ export default class Main extends Base {
     }
 
     _addProject() {
-        this.openPopup(this.getPopupTemplate.bind(this), {title: '', description: ''}).then((result) => {
+        this.openPopup(this.getAddProjectPopupTemplate.bind(this), {title: '', description: ''}).then((result) => {
             if (result.title === '') {
                 /// нет заголовка
             } else {
@@ -72,7 +72,7 @@ export default class Main extends Base {
             <div className="Main">
                 <Scrollbar style={{width: '100%', height: '100%'}}>
                     <div className="Main-scrollContainer">
-                        {this.pageData.projects.map((project) =>
+                        {this.state.pageData.projects.map((project) =>
                             <div key={project.key} className="Main-project"
                                  onClick={this._openConstructor.bind(this, project)}>
                                 <div className="Main-project-title" title={project.title}>{project.title}</div>

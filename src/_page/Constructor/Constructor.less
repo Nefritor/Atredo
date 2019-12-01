@@ -14,5 +14,14 @@
     border-right: 1px solid #dedede;
     background-color: #fff;
     overflow: hidden;
+
+    & > .ProjectStage:last-child {
+      z-index: 0;
+    }
+
+    &-init > .ProjectStage:last-child {
+      margin-top: -51px;
+      z-index: 0;
+    }
   }
 }

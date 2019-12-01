@@ -9,19 +9,24 @@ import './ProjectStage.css';
 export default class ProjectStage extends React.Component {
     constructor(props) {
         super(props);
-        this.openPopup = this.props.popupHandlers().open.bind(this);
-        this.closePopup = this.props.popupHandlers().close.bind(this);
-        this.getPopupValue = this.props.popupHandlers().getValue.bind(this);
-        this.setPopupValue = this.props.popupHandlers().setValue.bind(this);
-        this.startLoading = this.props.loadingHandlers().start.bind(this);
-        this.stopLoading = this.props.loadingHandlers().stop.bind(this);
+        this._openPopup = this.props.popupHandlers().open.bind(this);
+        this._closePopup = this.props.popupHandlers().close.bind(this);
+        this._updatePopup = this.props.popupHandlers().update.bind(this);
+        this._getPopupValue = this.props.popupHandlers().getValue.bind(this);
+        this._setPopupValue = this.props.popupHandlers().setValue.bind(this);
+        this._addOperation = this.props.constructorHandlers().add.bind(this);
+        this._updateOperation = this.props.constructorHandlers().update.bind(this);
+        this._startLoading = this.props.loadingHandlers().start.bind(this);
+        this._stopLoading = this.props.loadingHandlers().stop.bind(this);
         this.state = {
             popupList: [],
-            stageData: props.stageData
+            stageData: props.stageData,
+            addTitle: '',
+            addDescription: ''
         }
     }
 
-    templatePopup(name, operationKey, header) {
+    selectorPopup(name, operationKey, header) {
         return (
             <div className="Popup">
                 <div className="Popup-head">
@@ -44,21 +49,34 @@ export default class ProjectStage extends React.Component {
                             </div>
                         </div>
                     })}
-                    <div className="Popup-body-row">
-                        <span className="Popup-body-row-name">Название</span>
-                        <input className="Popup-body-row-input"
-                               value={this.getPopupValue('title')}
-                               onChange={this.popupDataChange.bind(this, 'title')}/>
-                        <div className="Popup-body-row-accept"
-                             onClick={this.addItem.bind(this, name, {title: this.getPopupValue('title')})}>
-                            Добавить
-                        </div>
-                    </div>
                 </div>
                 <div className="Popup-footer">
+                    <span className="Popup-body-row-name">Название</span>
+                    <input className="Popup-body-row-input"
+                           value={this._getPopupValue('title')}
+                           onChange={this.popupDataChange.bind(this, 'title')}/>
+                    <div className="Popup-body-row-accept"
+                         onClick={this.addItem.bind(this, name, {title: this._getPopupValue('title')})}>
+                        Добавить
+                    </div>
                 </div>
             </div>
         );
+    }
+
+    openSelector(name, operationKey, title) {
+        this._startLoading();
+        OperationRPC[`get${name}sList`]().then((list) => {
+            this._stopLoading();
+            this.setState({
+                popupList: list
+            });
+            this._openPopup(
+                this.selectorPopup.bind(this, name, operationKey, title), {title: '', [name]: null}
+            ).then((result) => {
+                const res = result[name];
+            });
+        })
     }
 
     addItem(name, data) {
@@ -71,24 +89,12 @@ export default class ProjectStage extends React.Component {
                         ...data
                     }]
             });
-        })
-    }
-
-    openSelector(name, operationKey, title) {
-        this.startLoading();
-        OperationRPC[`get${name}sList`]().then((list) => {
-            this.stopLoading();
-            this.setState({
-                popupList: list
-            });
-            this.openPopup(this.templatePopup.bind(this, name, operationKey, title), {title: ''}).then((result) => {
-
-            });
+            this._updatePopup();
         })
     }
 
     deleteItem(event, name, operationKey, itemKey) {
-        event.preventDefault();
+        event.stopPropagation();
         OperationRPC['remove' + name](itemKey).then((data) => {
             this.setState({
                 popupList: data
@@ -97,7 +103,7 @@ export default class ProjectStage extends React.Component {
     }
 
     selectItem(name, operationKey, itemKey) {
-        this.state.stageData.operations.some((operation) => {
+        this.state.stageData.operations.some((operation, index) => {
             if (operation.key === operationKey) {
                 const itemName = (() => {
                     switch (name) {
@@ -110,19 +116,61 @@ export default class ProjectStage extends React.Component {
                     }
                 })();
                 operation[itemName] = itemKey;
+                this._setPopupValue(name, itemKey);
+                this._updateOperation(this.props.stageIndex, index, operation);
                 return true;
             }
             return false;
         });
+        this._closePopup();
+    }
+
+    addOperationHandler() {
+        if (this.state.addTitle && this.state.addDescription) {
+            this._addOperation(
+                this.props.stageIndex,
+                {
+                    key: this.state.stageData.operations.length ?
+                        Math.max(...this.state.stageData.operations.map(x => x.key)) + 1 : 0,
+                    title: this.state.addTitle,
+                    description: this.state.addDescription,
+                    actor: -1,
+                    object: -1,
+                    action: -1
+                }
+            );
+            this.setState({
+                addTitle: '',
+                addDescription: '',
+                initNewOperation: true
+            });
+            setTimeout(() => {
+                this.setState({
+                    initNewOperation: false
+                });
+            }, 300)
+        }
+    }
+
+    addTitleChanged(event) {
+        this.setState({
+            addTitle: event.target.value
+        })
+    }
+
+    addDescriptionChanged(event) {
+        this.setState({
+            addDescription: event.target.value
+        })
     }
 
     popupDataChange(prop, event) {
-        this.setPopupValue(prop, event.target.value)
+        this._setPopupValue(prop, event.target.value)
     }
 
     render() {
         return (
-            <div className="ProjectStage">
+            <div className={`ProjectStage${this.state.initNewOperation ? ' ProjectStage-init' : ''}`}>
                 <div className="ProjectStage-header">
                     <div className="ProjectStage-header-title" title={'Этап: ' + this.state.stageData.title}>
                         <div className="ProjectStage-header-title-top">Этап</div>
@@ -177,7 +225,26 @@ export default class ProjectStage extends React.Component {
                         </div>
                     </div>
                 )}
-                <div className="ProjectStage-addTemplate">Добавить</div>
+                <div className="ProjectStage-addTemplate">
+                    <div className="ProjectStage-operation-column-info-input">
+                        <input className="ProjectStage-operation-title-input"
+                               placeholder="Название операции"
+                               onChange={this.addTitleChanged.bind(this)}
+                               value={this.state.addTitle}/>
+                        <div className="ProjectStage-operation-description-scrollContainer-input">
+                            <textarea className="ProjectStage-operation-description-content-input"
+                                      placeholder="Описание"
+                                      onChange={this.addDescriptionChanged.bind(this)}
+                                      value={this.state.addDescription}/>
+                        </div>
+                    </div>
+                    <div className="ProjectStage-operation-column-interactive">
+                        <div className="ProjectStage-operation-button" onClick={this.addOperationHandler.bind(this)}>
+                            Добавить
+                        </div>
+                    </div>
+                    <div className="ProjectStage-addTemplate-bottomLine"/>
+                </div>
             </div>
         )
     }

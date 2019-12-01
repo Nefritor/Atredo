@@ -1,7 +1,7 @@
 export default class Base {
     static endpoint;
 
-    static fetchData(request, data) {
+    static fetchData(request, data, item) {
         if (this.endpoint) {
             return new Promise((resolve) => {
                 setTimeout(() => {
@@ -12,6 +12,8 @@ export default class Base {
                                     return this._fromMain(request, data);
                                 case 'Operation':
                                     return this._fromOperations(request, data);
+                                case 'Project':
+                                    return this._fromProjects(request, data, item);
                                 default:
                                     throw Error(`Unknown endpoint "${this.endpoint}"`);
                             }
@@ -56,11 +58,24 @@ export default class Base {
             case 'addObject':
                 return this.addItemToLocalStorage('Objects', data);
             case 'removeAction':
-                return this.removeItemFromLocalStorage('Actions', data);
+                return this.updateItemInLocalStorage('Actions', data);
             case 'removeActor':
-                return this.removeItemFromLocalStorage('Actors', data);
+                return this.updateItemInLocalStorage('Actors', data);
             case 'removeObject':
-                return this.removeItemFromLocalStorage('Objects', data);
+                return this.updateItemInLocalStorage('Objects', data);
+            default:
+                throw Error(`Unknown request "${this.endpoint}.${request}"`);
+        }
+    }
+
+    static _fromProjects(request, data, item) {
+        switch (request) {
+            case 'getStagesList':
+                return this.getItemFromLocalStorage('Stages', data);
+            case 'addStage':
+                return this.addItemToLocalStorage('Stages', item, data);
+            case 'updateStagesList':
+                return this.updateItemInLocalStorage('Stages', data, item);
             default:
                 throw Error(`Unknown request "${this.endpoint}.${request}"`);
         }
@@ -70,15 +85,19 @@ export default class Base {
         return JSON.parse(localStorage.getItem(key)) || [];
     }
 
-    static addItemToLocalStorage(key, data) {
+    static addItemToLocalStorage(key, item, dataKey) {
         const storageData = this.getJsonFromLocalStorage(key);
-        const maxKeyValue = Math.max(...storageData.map(x => x.key), -1);
-        storageData.push({key: maxKeyValue + 1, ...data});
+        const maxKeyValue = dataKey ? dataKey - 1 : Math.max(...storageData.map(x => x.key), -1);
+        storageData.push({key: maxKeyValue + 1, ...item});
         localStorage.setItem(key, JSON.stringify(storageData));
         return maxKeyValue + 1;
     }
 
-    static removeItemFromLocalStorage(key, dataKey) {
+    static getItemFromLocalStorage(key, dataKey) {
+        return this.getJsonFromLocalStorage(key).find((item) => item.key === dataKey) || [];
+    }
+
+    static updateItemInLocalStorage(key, dataKey = -1, item) {
         const storageData = this.getJsonFromLocalStorage(key);
 
         const index = (() => {for (const id in storageData) {
@@ -87,11 +106,19 @@ export default class Base {
             }
         }})();
         if (index) {
-            storageData.splice(index, 1);
+            const args = [parseInt(index, 10), 1];
+            if (item) {
+                args.push(item);
+            }
+            storageData.splice(...args);
             localStorage.setItem(key, JSON.stringify(storageData));
-            return storageData;
+            return item;
+        } else if (dataKey !== -1) {
+            storageData.push(item);
+            localStorage.setItem(key, JSON.stringify(storageData));
+            return item;
         } else {
-            console.warn(`There is nothing to delete... Unknown key "${dataKey}" of "${key}"`);
+            console.warn(`There is nothing to update... Unknown key "${dataKey}" of "${key}"`);
         }
     }
 }
