@@ -6,7 +6,6 @@
   transition: background-color .3s ease, margin-top .3s ease;
 
 
-
   &-init {
     & > .ProjectStage-operation:nth-last-child(2) {
       margin-top: -151px;
@@ -50,7 +49,7 @@
               opacity: 1;
             }
 
-            &-operation-column-interactive {
+            &-operation-column-interactive-input {
               opacity: 1;
             }
 
@@ -153,9 +152,14 @@
 
       &-interactive {
         width: 250px;
-        opacity: 0;
         flex-shrink: 0;
-        transition: opacity .3s ease;
+
+        &-input {
+          width: 250px;
+          flex-shrink: 0;
+          transition: opacity .3s ease;
+          opacity: 0;
+        }
       }
     }
 
