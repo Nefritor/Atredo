@@ -237,7 +237,7 @@ export default class ProjectStage extends React.Component {
                                       value={this.state.addDescription}/>
                         </div>
                     </div>
-                    <div className="ProjectStage-operation-column-interactive">
+                    <div className="ProjectStage-operation-column-interactive-input">
                         <div className="ProjectStage-operation-button" onClick={this.addOperationHandler.bind(this)}>
                             Добавить
                         </div>
