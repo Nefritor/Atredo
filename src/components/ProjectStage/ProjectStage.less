@@ -50,6 +50,10 @@
               opacity: 1;
             }
 
+            &-operation-column-interactive {
+              opacity: 1;
+            }
+
             &-addTemplate-bottomLine {
               opacity: 0;
             }
@@ -149,7 +153,9 @@
 
       &-interactive {
         width: 250px;
+        opacity: 0;
         flex-shrink: 0;
+        transition: opacity .3s ease;
       }
     }
 
