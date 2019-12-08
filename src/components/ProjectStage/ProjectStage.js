@@ -4,7 +4,6 @@ import Action from './Action/Action';
 import Actor from './Actor/Actor';
 import Object from './Object/Object';
 import {OperationRPC} from 'rpc';
-import './ProjectStage.css';
 
 export default class ProjectStage extends React.Component {
     constructor(props) {

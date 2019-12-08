@@ -1,11 +1,11 @@
 import React from 'react';
 import {OperationRPC} from 'rpc';
-import './Action.css';
 
 export default class Action extends React.Component {
     constructor(props) {
         super(props);
         this.openSelector = props.openSelector.bind(this);
+        this.inCorrectData = false;
         if (props.id !== -1) {
             this.setData(this.props.id);
         }
@@ -19,26 +19,35 @@ export default class Action extends React.Component {
 
     setData(id) {
         OperationRPC.getAction(id).then((data) => {
-            this.setState({
-                action: data,
-                id: this.props.id
-            });
+            if (data) {
+                this.setState({
+                    action: data,
+                    id: data ? this.props.id : -1
+                });
+            } else {
+                this.inCorrectData = true;
+            }
         })
     }
 
     render() {
         return (
-            this.props.id !== -1 ?
+            this.props.id !== -1 && !this.inCorrectData ?
                 this.state && this.state.id !== -1 ?
                     <div className="Action">
                         {this.state.action &&
-                        <div>
-                            {this.state.action.title}
+                        <div className="Action-container">
+                            <div className="Action-container-type">
+                                Действие
+                            </div>
+                            <div className="Action-container-title">
+                                {this.state.action.title}
+                            </div>
                         </div>
                         }
                     </div>
                     :
-                    <div>
+                    <div className="Action-loading">
                         Загрузка
                     </div>
                 :

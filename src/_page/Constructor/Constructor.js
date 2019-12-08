@@ -3,7 +3,6 @@ import Base from '../Base';
 import Scrollbar from 'react-scrollbars-custom';
 import ProjectStage from 'components/ProjectStage/ProjectStage';
 import {ReactComponent as ImagePlus} from 'lib/plus.svg';
-import './Constructor.css';
 import {ProjectRPC} from "rpc";
 
 export default class Constructor extends Base {

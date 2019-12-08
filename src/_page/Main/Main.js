@@ -3,7 +3,6 @@ import Base from '../Base';
 import Scrollbar from 'react-scrollbars-custom';
 import {MainRPC} from 'rpc';
 import {ReactComponent as ImagePlus} from 'lib/plus.svg';
-import './Main.css'
 
 export default class Main extends Base {
     getData(config, resolve) {
