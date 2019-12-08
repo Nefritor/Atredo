@@ -1,0 +1,137 @@
+<svg viewBox="0 0 300 230">
+    <path fill="url(#darkGradient)">
+        <animate attributeName="d"
+                 dur="1000ms"
+                 repeatCount="indefinite"
+                 keyTimes="0;
+                             .33;
+                             .66;
+                             1"
+                 calcMode="spline"
+                 keySplines="0.8 0 0.2 1;
+                               0.8 0 0.2 1;
+                               0.8 0 0.2 1;"
+                 values="
+                           M 100 50
+                           A 1 1 90 1 0 100 70
+                           L 100 70
+                           A 1 1 90 1 0 100 50
+                           L 100 50
+                           Z;
+
+                           M 100 50
+                           A 1 1 90 1 0 100 70
+                           L 200 70
+                           A 1 1 90 1 0 200 50
+                           L 100 50
+                           Z;
+
+                           M 200 50
+                           A 1 1 90 1 0 200 70
+                           L 200 70
+                           A 1 1 90 1 0 200 50
+                           L 200 50
+                           Z;
+
+                           M 200 150
+                           A 1 1 90 1 0 200 170
+                           L 200 170
+                           A 1 1 90 1 0 200 150
+                           L 200 150
+                           Z;"/>
+    </path>
+    <path fill="url(#darkGradient)">
+        <animate attributeName="d"
+                 dur="1000ms"
+                 repeatCount="indefinite"
+                 keyTimes="0;
+                               .33;
+                               .66;
+                               1"
+                 calcMode="spline"
+                 keySplines="0.8 0 0.2 1;
+                                 0.8 0 0.2 1;
+                                 0.8 0 0.2 1;"
+                 values="
+                             M 150 100
+                             A 1 1 90 1 0 150 120
+                             L 150 120
+                             A 1 1 90 1 0 150 100
+                             L 150 100
+                             Z;
+
+                             M 100 100
+                             A 1 1 90 1 0 100 120
+                             L 200 120
+                             A 1 1 90 1 0 200 100
+                             L 100 100
+                             Z;
+
+                             M 150 100
+                             A 1 1 90 1 0 150 120
+                             L 150 120
+                             A 1 1 90 1 0 150 100
+                             L 150 100
+                             Z;
+
+                             M 150 100
+                             A 1 1 90 1 0 150 120
+                             L 150 120
+                             A 1 1 90 1 0 150 100
+                             L 150 100
+                             Z;"/>
+    </path>
+    <path fill="url(#darkGradient)">
+        <animate attributeName="d"
+                 dur="1000ms"
+                 repeatCount="indefinite"
+                 keyTimes="0;
+                                 .33;
+                                 .66;
+                                 1"
+                 calcMode="spline"
+                 keySplines="0.8 0 0.2 1;
+                                   0.8 0 0.2 1;
+                                   0.8 0 0.2 1;"
+                 values="
+                               M 200 150
+                               A 1 1 90 1 0 200 170
+                               L 200 170
+                               A 1 1 90 1 0 200 150
+                               L 200 150
+                               Z;
+
+                               M 100 150
+                               A 1 1 90 1 0 100 170
+                               L 200 170
+                               A 1 1 90 1 0 200 150
+                               L 100 150
+                               Z;
+
+                               M 100 150
+                               A 1 1 90 1 0 100 170
+                               L 100 170
+                               A 1 1 90 1 0 100 150
+                               L 100 150
+                               Z;
+
+                               M 100 50
+                               A 1 1 90 1 0 100 70
+                               L 100 70
+                               A 1 1 90 1 0 100 50
+                               L 100 50
+                               Z;"/>
+    </path>
+    <defs>
+        <linearGradient id="darkGradient" x1="30%" y1="70%">
+            <stop offset="20%" stop-color="#d54bec">
+                <animate attributeName="stop-color" dur="3000ms" values="#d54bec; #f13e3e; #d54bec"
+                         repeatCount="indefinite"/>
+            </stop>
+            <stop offset="80%" stop-color="#f754c3">
+                <animate attributeName="stop-color" dur="3000ms" values="#f754c3; #f1603e; #f754c3"
+                         repeatCount="indefinite"/>
+            </stop>
+        </linearGradient>
+    </defs>
+</svg>
