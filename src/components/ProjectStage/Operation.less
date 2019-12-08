@@ -1,4 +1,4 @@
-.Action {
+.Operation {
   height: 100%;
 
   &-EmptyData {
@@ -27,6 +27,9 @@
   }
 
   &-loading {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
     height: 100%;
     background-image: linear-gradient(60deg, transparent 0% 25%, #ffffff80 50%, transparent 75% 100%);
     animation: sliding-background 1s linear infinite;
