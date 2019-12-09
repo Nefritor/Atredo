@@ -2,7 +2,7 @@
 @import "./../../animations.less";
 
 .ProjectStage {
-  width: 600px;
+  width: 500px;
   transition: background-color .3s ease, margin-top .3s ease;
 
 
@@ -49,7 +49,7 @@
               opacity: 1;
             }
 
-            &-operation-column-interactive-input {
+            &-operation-button {
               opacity: 1;
             }
 
@@ -122,6 +122,8 @@
       justify-content: center;
       font-size: 18px;
       color: #666;
+      opacity: 0;
+      transition: opacity .3s ease;
     }
 
     &-expanded {
@@ -151,14 +153,12 @@
       }
 
       &-interactive {
-        width: 250px;
+        width: 200px;
         flex-shrink: 0;
 
         &-input {
           width: 250px;
           flex-shrink: 0;
-          transition: opacity .3s ease;
-          opacity: 0;
         }
       }
     }
@@ -233,6 +233,7 @@
 
       &-activeArea {
         height: 100%;
+        text-align: right;
         transition: background-color .3s ease;
         @button();
 
@@ -257,7 +258,7 @@
       width: 200px;
       background-color: #b5b5b5;
       bottom: 5px;
-      left: 200px;
+      left: 150px;
       border-radius: 2px;
       transition: opacity .3s ease;
       animation: bouncing 3s infinite ease;
@@ -269,6 +270,10 @@
       height: 91px;
 
       .ProjectStage-operation-column-info-input {
+        opacity: 1;
+      }
+
+      .ProjectStage-operation-button {
         opacity: 1;
       }
     }
