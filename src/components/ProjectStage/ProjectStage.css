@@ -1,0 +1,159 @@
+.col-1 {
+  width: 10%;
+}
+.col-2 {
+  width: 20%;
+}
+.col-3 {
+  width: 30%;
+}
+.col-4 {
+  width: 40%;
+}
+.col-5 {
+  width: 50%;
+}
+.col-6 {
+  width: 60%;
+}
+.col-7 {
+  width: 70%;
+}
+.col-8 {
+  width: 80%;
+}
+.col-9 {
+  width: 90%;
+}
+.col-10 {
+  width: 100%;
+}
+.ProjectStage {
+  width: 600px;
+  transition: background-color 0.3s ease;
+}
+.ProjectStage:hover {
+  background-color: #fafafa;
+}
+.ProjectStage:hover .ProjectStage-addTemplate {
+  margin-top: -30px;
+}
+.ProjectStage:hover .ProjectStage-addTemplate:hover {
+  margin-top: 0;
+}
+.ProjectStage-header {
+  height: 50px;
+  padding: 0 10px;
+  display: flex;
+  border-bottom: 1px solid #dedede;
+  position: relative;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.ProjectStage-header:hover {
+  background-color: #fafafa;
+}
+.ProjectStage-header:active {
+  background-color: #f0f0f0;
+}
+.ProjectStage-header-title {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  justify-content: center;
+}
+.ProjectStage-header-title-top {
+  font-size: 17px;
+  height: 20px;
+}
+.ProjectStage-header-title-bottom {
+  line-height: 1;
+  font-size: 23px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ProjectStage-operation {
+  display: flex;
+  height: 150px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #dedede;
+  position: relative;
+  overflow: hidden;
+  border-left: 5px solid #673AB7;
+  transition: height 0.3s ease;
+}
+.ProjectStage-operation-expanded {
+  height: 100%;
+}
+.ProjectStage-operation-column {
+  display: flex;
+  flex-direction: column;
+}
+.ProjectStage-operation-column-info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+.ProjectStage-operation-column-interactive {
+  width: 250px;
+  flex-shrink: 0;
+}
+.ProjectStage-operation-title {
+  padding: 0 10px;
+  font-size: 20px;
+  line-height: 30px;
+  flex-shrink: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ProjectStage-operation-description-scrollContainer {
+  overflow: auto;
+  margin-right: -16px;
+}
+.ProjectStage-operation-description-content {
+  height: 100%;
+  padding: 5px 10px 10px 10px;
+  font-size: 14px;
+  color: #666;
+}
+.ProjectStage-operation-bottomInnerShadow {
+  width: 100%;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(#f5f5f500, #f5f5f5 80%);
+}
+.ProjectStage-operation-container {
+  height: 40px;
+  padding: 5px;
+}
+.ProjectStage-operation-container-activeArea {
+  height: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.ProjectStage-operation-container-activeArea:hover {
+  background-color: #0001;
+  box-shadow: inset 0 0 5px -3px #0002;
+}
+.ProjectStage-operation-container-activeArea:active {
+  background-color: #0002;
+  box-shadow: inset 0 0 5px -3px #0004;
+}
+.ProjectStage-addTemplate {
+  height: 50px;
+  background-color: #eaeaea;
+  margin-top: -50px;
+  transition: margin-top 0.3s ease;
+}
+/*# sourceMappingURL=ProjectStage.css.map */

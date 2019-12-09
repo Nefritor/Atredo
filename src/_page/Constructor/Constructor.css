@@ -1,0 +1,17 @@
+.Constructor {
+  height: 100%;
+}
+.Constructor-scrollContainer {
+  display: flex;
+  flex-direction: column;
+}
+.Constructor-stagesLine {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+  min-height: 670px;
+  border-right: 1px solid #dedede;
+  background-color: #fff;
+  overflow: hidden;
+}
+/*# sourceMappingURL=Constructor.css.map */

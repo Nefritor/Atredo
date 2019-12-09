@@ -1,0 +1,102 @@
+.col-1 {
+  width: 10%;
+}
+.col-2 {
+  width: 20%;
+}
+.col-3 {
+  width: 30%;
+}
+.col-4 {
+  width: 40%;
+}
+.col-5 {
+  width: 50%;
+}
+.col-6 {
+  width: 60%;
+}
+.col-7 {
+  width: 70%;
+}
+.col-8 {
+  width: 80%;
+}
+.col-9 {
+  width: 90%;
+}
+.col-10 {
+  width: 100%;
+}
+.Main {
+  height: 100%;
+}
+.Main-scrollContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px;
+}
+.Main-project {
+  width: 258px;
+  margin: 20px;
+  height: 130px;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+.Main-project:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px -10px #00000033;
+}
+.Main-project:active {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px -7px #00000033;
+}
+.Main-project-image {
+  justify-content: center;
+}
+.Main-project-image-plus {
+  height: 90px;
+}
+.Main-project-title {
+  height: 30px;
+  flex-shrink: 0;
+  padding: 0 10px;
+  line-height: 30px;
+  font-size: 18px;
+  border-bottom: 1px solid #dedede;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.Main-project-description {
+  height: 100%;
+  padding: 5px 10px;
+  font-size: 14px;
+  line-height: 1;
+  overflow: auto;
+  margin-right: -17px;
+}
+.ScrollbarsCustom-Track {
+  height: 100% !important;
+  top: 0 !important;
+  border-radius: 0 !important;
+  width: 5px !important;
+  transition: width 0.1s ease;
+}
+.ScrollbarsCustom-Track:hover,
+.ScrollbarsCustom-Track:active {
+  width: 15px !important;
+}
+.ScrollbarsCustom-Content {
+  padding: 0 !important;
+}
+.ScrollbarsCustom-Thumb {
+  border-radius: 0 !important;
+}
+/*# sourceMappingURL=Main.css.map */
