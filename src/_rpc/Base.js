@@ -112,7 +112,7 @@ export default class Base {
             }
             storageData.splice(...args);
             localStorage.setItem(key, JSON.stringify(storageData));
-            return item;
+            return item || storageData;
         } else if (dataKey !== -1) {
             storageData.push(item);
             localStorage.setItem(key, JSON.stringify(storageData));

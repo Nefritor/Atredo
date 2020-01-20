@@ -95,6 +95,7 @@ export default class ProjectStage extends React.Component {
             this.setState({
                 popupList: data
             });
+            this._updatePopup();
         })
     }
 
@@ -184,7 +185,6 @@ export default class ProjectStage extends React.Component {
                                     {operation.description}
                                 </div>
                             </div>
-                            <div className="ProjectStage-operation-bottomInnerShadow"/>
                         </div>
                         <div className="ProjectStage-operation-column-interactive">
                             <div className="ProjectStage-operation-container">
