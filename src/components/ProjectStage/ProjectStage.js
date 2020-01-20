@@ -1,5 +1,4 @@
 import React from 'react';
-import {ReactComponent as ImagePlus} from '../../lib/plus.svg';
 import Action from './Action/Action';
 import Actor from './Actor/Actor';
 import Object from './Object/Object';
@@ -72,9 +71,7 @@ export default class ProjectStage extends React.Component {
             });
             this._openPopup(
                 this.selectorPopup.bind(this, name, operationKey, title), {title: '', [name]: null}
-            ).then((result) => {
-                const res = result[name];
-            });
+            );
         })
     }
 
@@ -98,6 +95,7 @@ export default class ProjectStage extends React.Component {
             this.setState({
                 popupList: data
             });
+            this._updatePopup();
         })
     }
 
@@ -112,6 +110,8 @@ export default class ProjectStage extends React.Component {
                             return 'action';
                         case 'Object':
                             return 'object';
+                        default:
+                            throw Error('Unknown item name');
                     }
                 })();
                 operation[itemName] = itemKey;
@@ -185,7 +185,6 @@ export default class ProjectStage extends React.Component {
                                     {operation.description}
                                 </div>
                             </div>
-                            <div className="ProjectStage-operation-bottomInnerShadow"/>
                         </div>
                         <div className="ProjectStage-operation-column-interactive">
                             <div className="ProjectStage-operation-container">
