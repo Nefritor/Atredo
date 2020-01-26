@@ -6,7 +6,7 @@ import {ReactComponent as ImagePlus} from 'lib/plus.svg';
 
 export default class Main extends Base {
     getData(config, resolve) {
-        MainRPC.getProjectList(config).then((data) => {
+        MainRPC.getProjectList(config).then(async (data) => {
             resolve({
                 projects: data
             });

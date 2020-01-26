@@ -1,6 +1,11 @@
 import axios from 'axios';
 const baseUrl = 'http://13.48.194.48:5000';
 
+const headers = {
+  "Content-Type": "application/json;charset=UTF-8",
+  "Access-Control-Allow-Origin": "*",
+};
+
 export default class Base {
     static endpoint;
 
@@ -32,9 +37,10 @@ export default class Base {
     static async _fromMain(request, data) {
         switch (request) {
             case 'getProjectList':
-              return await axios.get(baseUrl+'/projects/');
+              const response = await axios.get(baseUrl+'/projects/');
+              return response.data;
             case 'addProject':
-                return await axios.post(baseUrl+'/projects/', data);
+                return await axios.post(baseUrl+'/projects/', JSON.stringify(data), {headers});
             default:
                 throw Error(`Unknown request "${this.endpoint}.${request}"`);
         }
@@ -43,22 +49,34 @@ export default class Base {
     static async _fromOperations(request, data) {
         switch (request) {
             case 'getAction':
-              return await axios.get(baseUrl + '/action/' + data + '/');
+              let action = await axios.get(baseUrl + '/action/' + data + '/');
+              debugger;
+              return action.data;
                 // return this.getJsonFromLocalStorage('Actions').find((item) => item.key === data);
             case 'getActor':
-              return await axios.get(baseUrl + '/actor/' + data + '/');
+              let actor = await axios.get(baseUrl + '/actor/' + data + '/');
+              debugger;
+              return actor.data;
                 // return this.getJsonFromLocalStorage('Actors').find((item) => item.key === data);
             case 'getObject':
-              return await axios.get(baseUrl + '/object/' + data + '/');
+              let object = await axios.get(baseUrl + '/object/' + data + '/');
+              debugger;
+              return object.data;
                 // return this.getJsonFromLocalStorage('Objects').find((item) => item.key === data);
             case 'getActionsList':
-              return await axios.get(baseUrl + '/actions/');
+              let actions = await axios.get(baseUrl + '/actions/');
+              debugger;
+              return actions.data;
           // return this.getJsonFromLocalStorage('Actions');
             case 'getActorsList':
-              return await axios.get(baseUrl + '/actors/');
+              let actors = await axios.get(baseUrl + '/actors/');
+              debugger;
+              return actors.data;
           // return this.getJsonFromLocalStorage('Actors');
             case 'getObjectsList':
-              return await axios.get(baseUrl + '/objects/');
+              let objList = await axios.get(baseUrl + '/objects/');
+              debugger;
+              return objList.data;
           // return this.getJsonFromLocalStorage('Objects');
             case 'addAction':
               return await axios.post(baseUrl + '/actions/', {data});

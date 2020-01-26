@@ -147,7 +147,7 @@ export default class Constructor extends Base {
                     <div className="Constructor-scrollContainer">
                         <div
                             className={`Constructor-stagesLine${this.state.initNewStage ? ' Constructor-stagesLine-init' : ''}`}>
-                            {this.state.pageData.stages.map((stage, _id) =>
+                            {Array.from(this.state.pageData.stages).map((stage, _id) =>
                                 <ProjectStage key={_id}
                                               stageIndex={_id}
                                               stageData={stage}
