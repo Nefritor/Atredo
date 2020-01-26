@@ -7,7 +7,7 @@ import {ProjectRPC} from "rpc";
 
 export default class Constructor extends Base {
     getData(config, resolve) {
-        this.projectKey = config.key;
+        this.projectKey = config._id;
         ProjectRPC.getStagesList(this.projectKey).then((data) => {
             resolve({
                 stages: data.stages || []
@@ -112,7 +112,7 @@ export default class Constructor extends Base {
 
     _updateStagesList(stages) {
         return ProjectRPC.updateStagesList(this.projectKey, {
-            key: this.projectKey,
+            _id: this.projectKey,
             stages
         }).then((result) => {
             this.setState({
@@ -147,9 +147,9 @@ export default class Constructor extends Base {
                     <div className="Constructor-scrollContainer">
                         <div
                             className={`Constructor-stagesLine${this.state.initNewStage ? ' Constructor-stagesLine-init' : ''}`}>
-                            {this.state.pageData.stages.map((stage, key) =>
-                                <ProjectStage key={key}
-                                              stageIndex={key}
+                            {this.state.pageData.stages.map((stage, _id) =>
+                                <ProjectStage key={_id}
+                                              stageIndex={_id}
                                               stageData={stage}
                                               popupHandlers={this.popupHandlers.bind(this)}
                                               loadingHandlers={this.loadingHandlers.bind(this)}

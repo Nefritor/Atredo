@@ -51,7 +51,7 @@ export default class Main extends Base {
     }
 
     _openConstructor(projectData) {
-        this.appHandlers.pageChange('Constructor', {key: projectData.key, title: projectData.title});
+        this.appHandlers.pageChange('Constructor', {_id: projectData._id, title: projectData.title});
     }
 
     _addProject() {
@@ -71,8 +71,8 @@ export default class Main extends Base {
             <div className="Main">
                 <Scrollbar style={{width: '100%', height: '100%'}}>
                     <div className="Main-scrollContainer">
-                        {this.state.pageData.projects.map((project) =>
-                            <div key={project.key} className="Main-project"
+                        {Array.from(this.state.pageData.projects).map((project) =>
+                            <div key={project._id} className="Main-project"
                                  onClick={this._openConstructor.bind(this, project)}>
                                 <div className="Main-project-title" title={project.title}>{project.title}</div>
                                 <div className="Main-project-description">{project.description}</div>

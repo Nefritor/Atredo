@@ -7,8 +7,8 @@ export default class ProjectRPC extends Base {
         return super.fetchData('getStagesList', key);
     }
 
-    static addStage(dataKey, item) {
-        return super.fetchData('addStage', item, dataKey);
+    static addStage(key, item) {
+        return super.fetchData('addStage', key, item);
     }
 
     static updateStagesList(key, item) {

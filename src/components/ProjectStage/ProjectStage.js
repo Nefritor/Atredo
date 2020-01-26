@@ -38,12 +38,12 @@ export default class ProjectStage extends React.Component {
                     </div>
                     }
                     {this.state.popupList.map((item) => {
-                        return <div key={item.key} className="Popup-body-rowItem"
-                                    onClick={this.selectItem.bind(this, name, operationKey, item.key)}>
-                            <span className="Popup-body-rowItem-column col-2">{item.key}</span>
+                        return <div key={item._id} className="Popup-body-rowItem"
+                                    onClick={this.selectItem.bind(this, name, operationKey, item._id)}>
+                            <span className="Popup-body-rowItem-column col-2">{item._id}</span>
                             <span className="Popup-body-rowItem-column col-6">{item.title}</span>
                             <div className="Popup-body-rowItem-button col-2"
-                                 onClick={(event) => this.deleteItem(event, name, operationKey, item.key)}>Удалить
+                                 onClick={(event) => this.deleteItem(event, name, operationKey, item._id)}>Удалить
                             </div>
                         </div>
                     })}
@@ -101,7 +101,7 @@ export default class ProjectStage extends React.Component {
 
     selectItem(name, operationKey, itemKey) {
         this.state.stageData.operations.some((operation, index) => {
-            if (operation.key === operationKey) {
+            if (operation._id === operationKey) {
                 const itemName = (() => {
                     switch (name) {
                         case 'Actor':
@@ -129,8 +129,8 @@ export default class ProjectStage extends React.Component {
             this._addOperation(
                 this.props.stageIndex,
                 {
-                    key: this.state.stageData.operations.length ?
-                        Math.max(...this.state.stageData.operations.map(x => x.key)) + 1 : 0,
+                    _id: this.state.stageData.operations.length ?
+                        Math.max(...this.state.stageData.operations.map(x => x._id)) + 1 : 0,
                     title: this.state.addTitle,
                     description: this.state.addDescription,
                     actor: -1,
@@ -177,7 +177,7 @@ export default class ProjectStage extends React.Component {
                     </div>
                 </div>
                 {this.state.stageData.operations.map((operation) =>
-                    <div key={operation.key} className="ProjectStage-operation">
+                    <div key={operation._id} className="ProjectStage-operation">
                         <div className="ProjectStage-operation-column-info">
                             <div className="ProjectStage-operation-title">{operation.title}</div>
                             <div className="ProjectStage-operation-description-scrollContainer">
@@ -193,7 +193,7 @@ export default class ProjectStage extends React.Component {
                                            this.openSelector.bind(
                                                this,
                                                'Actor',
-                                               operation.key,
+                                               operation._id,
                                                'Выбрать исполнителя'
                                            )
                                        }/>
@@ -204,7 +204,7 @@ export default class ProjectStage extends React.Component {
                                             this.openSelector.bind(
                                                 this,
                                                 'Action',
-                                                operation.key,
+                                                operation._id,
                                                 'Выбрать действие'
                                             )
                                         }/>
@@ -215,7 +215,7 @@ export default class ProjectStage extends React.Component {
                                             this.openSelector.bind(
                                                 this,
                                                 'Object',
-                                                operation.key,
+                                                operation._id,
                                                 'Выбрать объект'
                                             )
                                         }/>
