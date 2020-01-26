@@ -266,13 +266,14 @@ code {
   box-shadow: inset 0 0 5px -3px #0004;
 }
 .App-body-page .Popup-body-row {
-  padding: 10px 15px;
+  padding: 10px 15px 10px 0px;
   display: flex;
 }
 .App-body-page .Popup-body-row-name {
   width: 120px;
   font-size: 17px;
   flex-shrink: 0;
+  text-align: center;
 }
 .App-body-page .Popup-body-row-input,
 .App-body-page .Popup-body-row-textarea {
@@ -299,15 +300,11 @@ code {
   overflow: hidden;
 }
 .App-body-page .Popup-body-row-accept {
-  height: 25px;
-  padding: 0 8px;
+  padding: 5px;
   margin-left: 20px;
-  display: flex;
-  flex-direction: column;
   text-align: center;
-  justify-content: center;
-  border-radius: 5px;
   font-size: 15px;
+  flex-grow: 1;
   cursor: pointer;
   transition: background-color 0.3s ease;
   user-select: none;
@@ -322,27 +319,28 @@ code {
 }
 .App-body-page .Popup-footer {
   display: flex;
-  padding: 10px;
+  margin-top: 10px;
+  align-items: center;
+  line-height: 30px;
 }
 .App-body-page .Popup-footer-button {
-  width: 75px;
+  flex-grow: 1;
+  width: 100%;
   padding: 5px;
-  background-color: #eaeaea;
-  border-radius: 5px;
   text-align: center;
-  margin-left: 10px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
   user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 .App-body-page .Popup-footer-button:hover {
-  background-color: #efefef;
+  background-color: #0001;
+  box-shadow: inset 0 0 5px -3px #0002;
 }
-.App-body-page .Popup-footer-button:hover:active {
-  background-color: #afafaf;
-  color: #fff;
+.App-body-page .Popup-footer-button:active {
+  background-color: #0002;
+  box-shadow: inset 0 0 5px -3px #0004;
 }
-.App-body-page .Popup-footer-rightAlign {
+.App-body-page .Popup-rightAlign {
   justify-content: flex-end;
 }
 .App-menu {
@@ -351,4 +349,3 @@ code {
   flex-shrink: 0;
   border-left: 1px solid #dedede;
 }
-/*# sourceMappingURL=index.css.map */

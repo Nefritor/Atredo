@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
 import * as serviceWorker from 'serviceWorker';
-import 'styleslib.css'
+import './styleslib.css'
 
 const startPage = 'Main';
 const pageConfig = {
