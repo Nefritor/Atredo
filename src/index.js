@@ -8,8 +8,14 @@ const startPage = 'Main';
 const pageConfig = {
     title: 'Главная'
 };
+const userData = JSON.parse(sessionStorage.getItem('userToken'));
 
-ReactDOM.render(<App startPage={startPage} config={pageConfig}/>, document.getElementById('Application'));
+ReactDOM.render(
+    <App startPage={startPage}
+         config={pageConfig}
+         userData={userData}/>,
+    document.getElementById('Application')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

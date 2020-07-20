@@ -41,7 +41,7 @@ export default class OperationsBase extends React.Component {
 
     render() {
         return (
-            this.props.id !== -1 && !this.inCorrectData?
+            this.props.id !== -1 && !this.inCorrectData ?
                 this.state && this.state.id !== -1 ?
                     <div className="Operation">
                         {this.state.operation &&
@@ -60,7 +60,7 @@ export default class OperationsBase extends React.Component {
                         Загрузка
                     </div>
                 :
-                <div className="Operation-EmptyData ProjectStage-operation-container-activeArea"
+                <div className="Operation-EmptyData ProjectStage-operation-container-activeArea buttonOK"
                      onClick={this.openSelector}>
                     {this.captions.selector}
                 </div>

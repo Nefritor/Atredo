@@ -11,6 +11,10 @@ export default class ProjectRPC extends Base {
         return super.fetchData('addStage', item, dataKey);
     }
 
+    static deleteStage(projectKey, dataKey) {
+        return super.fetchData('deleteStage', projectKey, dataKey);
+    }
+
     static updateStagesList(key, item) {
         return super.fetchData('updateStagesList', key, item);
     }
