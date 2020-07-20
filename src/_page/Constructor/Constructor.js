@@ -16,39 +16,6 @@ export default class Constructor extends Base {
                 navBarActions: this.getNavBarActions()
             });
         });
-        /*setTimeout(() => {
-            resolve({
-                stages: [
-                    {
-                        key: 0,
-                        title: 'Заморозка',
-                        operations: [
-                            {
-                                key: 0,
-                                title: 'Открываем холодильник',
-                                description: 'Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю. Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю. Это такое описание очень и очень длинное. Надеюсь тебе оно нравится, ибо будешь кушать соплю.',
-                                actor: -1,
-                                object: -1,
-                                action: -1
-                            },
-                            {
-                                key: 1,
-                                title: 'Кладем в холодильник',
-                                description: 'И это тоже описание',
-                                actor: -1,
-                                object: -1,
-                                action: -1
-                            }
-                        ]
-                    },
-                    {
-                        key: 1,
-                        title: 'Разморозка',
-                        operations: []
-                    }
-                ]
-            });
-        }, 300)*/
     }
 
     getNavBarActions() {

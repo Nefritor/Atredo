@@ -66,20 +66,20 @@
     height: 50px;
     padding: 0 10px;
     display: flex;
-    border-bottom: 1px solid #dedede;
+    color: #fff;
     position: relative;
-    background-color: #fff;
+    background-color: #a4a2cb;
     cursor: pointer;
-    transition: background-color .3s ease;
+    transition: background-color 0.3s ease;
     user-select: none;
     z-index: 2;
 
     &:hover {
-      background-color: #fafafa;
+      background-color: #9d9bc4;
     }
 
     &:active {
-      background-color: #f0f0f0;
+      background-color: #9795bf;
     }
 
     &-title {
@@ -109,12 +109,12 @@
     border-bottom: 1px solid #dedede;
     position: relative;
     overflow: hidden;
-    border-left: 5px solid #673AB7;
+    color: #9694b7;
+    border-left: 5px solid #c5c6f1;
     transition: height .3s ease, margin-top .3s ease;
     z-index: 2;
 
     &-button {
-      @button();
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -237,7 +237,6 @@
         min-height: 35px;
         text-align: right;
         transition: background-color .3s ease;
-        @button();
 
         &-loading {
 

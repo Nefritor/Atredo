@@ -12,4 +12,8 @@ export default class MainRPC extends Base {
     static addProject(data) {
         return super.fetchData('addProject', data);
     }
+
+    static deleteProject(data) {
+        return super.fetchData('deleteProject', data);
+    }
 }

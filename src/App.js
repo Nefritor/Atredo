@@ -1,7 +1,11 @@
 import React from 'react';
 import * as PagesLib from 'page'
+import {User} from 'menu';
+import {decode} from 'jsonwebtoken';
 import ErrorPage from 'components/ErrorPage/ErrorPage';
 import {ReactComponent as BackIcon} from 'lib/back.svg';
+import {UserRPC} from "rpc";
+import {StateTimeoutSwitch} from "components/StateChanger/StateChanger";
 
 export default class Application extends React.Component {
     constructor(props) {
@@ -14,6 +18,9 @@ export default class Application extends React.Component {
                 config: props.config
             }],
             title: props.config.title,
+            userData: props.userData ? decode(props.userData) : {},
+            message: '',
+            messageType: 'default'
         }
     };
 
@@ -74,26 +81,72 @@ export default class Application extends React.Component {
         }
     }
 
+    _signInHandler(data) {
+        return UserRPC.signIn(data).then((response) => {
+            const data = {
+                token: null,
+                message: null,
+                ...response
+            };
+            if (data.token) {
+                sessionStorage.setItem('userToken', JSON.stringify(data.token));
+                this.setState({
+                    userData: decode(data.token)
+                });
+            }
+            return data;
+        });
+    }
+
+    _registerHandler(data) {
+        return UserRPC.register(data);
+    }
+
+    _logOutHandler() {
+        sessionStorage.removeItem('userToken');
+        this.setState({
+            userData: {}
+        });
+    }
+
+    _messageHandler(message, type = 'default') {
+        return StateTimeoutSwitch(
+            this.setState.bind(this),
+            ['message', 'messageType'],
+            [[message, null], [type, 'default']],
+            2000
+        );
+    }
+
     render() {
         const [PageComponent, PageConfig] = this._getPageData();
         return (
-            <div className="App">
-                <div className="App-body">
-                    <div className="App-body-navBar">
-                        <div className={this.state.route.length > 1 ?
-                            'App-body-navBar-backButton' :
-                            'App-body-navBar-backButton-hidden'}
-                             onClick={this._goBack.bind(this)}><BackIcon/></div>
-                        {this.state.title &&
-                        <div className="App-body-navBar-title" title={this.state.title}>{this.state.title}</div>}
-                        <div className="App-body-navBar-actions">
-                            {this.state.navBarActions}
+            <div className="App-wrapper">
+                <div className="App">
+                    <div className="App-body">
+                        <div className="App-body-navBar">
+                            <div className={this.state.route.length > 1 ?
+                                'App-body-navBar-backButton' :
+                                'App-body-navBar-backButton-hidden'}
+                                 onClick={this._goBack.bind(this)}><BackIcon/></div>
+                            {this.state.title &&
+                            <div className="App-body-navBar-title" title={this.state.title}>{this.state.title}</div>}
+                            <div className="App-body-navBar-actions">
+                                {this.state.navBarActions}
+                            </div>
                         </div>
+                        <PageComponent config={PageConfig} appHandlers={this._getAppHandlers()}/>
                     </div>
-                    <PageComponent config={PageConfig} appHandlers={this._getAppHandlers()}/>
+                    <div className="App-menu">
+                        <User userData={this.state.userData}
+                              signInHandler={this._signInHandler.bind(this)}
+                              registerHandler={this._registerHandler.bind(this)}
+                              logOutHandler={this._logOutHandler.bind(this)}
+                              messageHandler={this._messageHandler.bind(this)}/>
+                    </div>
                 </div>
-                <div className="App-menu">
-
+                <div className={"Message " + this.state.messageType}>
+                    {this.state.message}
                 </div>
             </div>
         );

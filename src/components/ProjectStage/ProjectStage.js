@@ -38,11 +38,11 @@ export default class ProjectStage extends React.Component {
                     </div>
                     }
                     {this.state.popupList.map((item) => {
-                        return <div key={item.key} className="Popup-body-rowItem"
+                        return <div key={item.key} className="Popup-body-rowItem buttonOK"
                                     onClick={this.selectItem.bind(this, name, operationKey, item.key)}>
                             <span className="Popup-body-rowItem-column col-2">{item.key}</span>
                             <span className="Popup-body-rowItem-column col-6">{item.title}</span>
-                            <div className="Popup-body-rowItem-button col-2"
+                            <div className="Popup-body-rowItem-button buttonOK col-2"
                                  onClick={(event) => this.deleteItem(event, name, operationKey, item.key)}>Удалить
                             </div>
                         </div>
@@ -53,7 +53,7 @@ export default class ProjectStage extends React.Component {
                     <input className="Popup-body-row-input"
                            value={this._getPopupValue('title')}
                            onChange={this.popupDataChange.bind(this, 'title')}/>
-                    <div className="Popup-body-row-accept"
+                    <div className="Popup-body-row-accept buttonOK"
                          onClick={this.addItem.bind(this, name, {title: this._getPopupValue('title')})}>
                         Добавить
                     </div>
@@ -237,7 +237,7 @@ export default class ProjectStage extends React.Component {
                         </div>
                     </div>
                     <div className="ProjectStage-operation-column-interactive-input">
-                        <div className="ProjectStage-operation-button" onClick={this.addOperationHandler.bind(this)}>
+                        <div className="ProjectStage-operation-button buttonOK" onClick={this.addOperationHandler.bind(this)}>
                             Добавить
                         </div>
                     </div>
